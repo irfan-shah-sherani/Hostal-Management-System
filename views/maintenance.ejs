@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maintenance</title>
+    <link rel="stylesheet" href="/css/maintenance.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <main>
+      <!-- sidebar -->
+      <div class="sidebar">
+        <div class="nav">
+          <div class="cross-icon">
+            <i class="fas fa-xmark"></i>
+          </div>
+          <div class="logo">
+            <img src="/assets/logo.png" alt="" />
+            <p>CodeFlare</p>
+          </div>
+        </div>
+        <div class="links">
+          <ul>
+            <li>
+              <a class="Dashboard" href="/">
+                <i
+                  class="fa-duotone fa-solid fa-table-columns"
+                  style="--fa-secondary-color: #ffffff"
+                ></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a class="Student" href="/student">
+                <i class="fas fa-user-graduate"></i>
+                <span>Student</span>
+              </a>
+            </li>
+            <li>
+              <a class="Room" href="/room">
+                <i class="fa-solid fa-bed"></i>
+                <span>Room</span>
+              </a>
+            </li>
+            <li>
+              <a class="Payment" href="/payment">
+                <i class="fas fa-money-bill"></i>
+                <span>Payment</span>
+              </a>
+            </li>
+            <li>
+              <a class="Guardians" href="/guardian">
+                <i class="fas fa-users"></i>
+                <span>Guardians</span>
+              </a>
+            </li>
+            <li>
+              <a class="Visitors" href="/visitor">
+                <i class="fas fa-user-check"></i>
+                <span>Visitors</span>
+              </a>
+            </li>
+            <li>
+              <a class="Maintenance active" href="/maintenance">
+                <i class="fa-solid fa-wrench"></i>
+                <span>Maintenance</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- sidebar end -->
+
+      <!-- main content -->
+      <div class="main-content">
+        <!-- TOP-nav -->
+        <nav class="main-nav">
+          <div class="page-name">
+            <i class="fas fa-bars"></i>
+            <p>Maintenance</p>
+          </div>
+          <div class="button">
+            <button id="addMaintenanceBtn">Add Maintenance</button>
+          </div>
+        </nav>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>room ID</th>
+                <th>issue_type</th>
+                <th>issue_description</th>
+                <th>priority</th>
+                <th>cost</th>
+                <th>status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% maintenances.forEach(maintenance => { %>
+              <tr>
+                <td><%= maintenance.id %></td>
+                <td><%= maintenance.room_id %></td>
+                <td><%= maintenance.issue_type %></td>
+                <td><%= maintenance.issue_description %></td>
+                <td><%= maintenance.priority %></td>
+                <td><%= maintenance.cost %></td>
+                <td><%= maintenance.status %></td>
+                <td>
+                  <form
+                    action="/maintenance/<%= maintenance.id %>?_method=DELETE"
+                    method="POST"
+                  >
+                    <button type="submit" class="delete-form">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <div class="add-new-maintenance">
+      <h2 class="form-title">Add Maintenance Issue</h2>
+      <form class="maintenance-form" action="/maintenance" method="POST">
+        <div class="inputForm">
+          <!-- Left Side -->
+          <div class="left-side">
+            <div class="form-group">
+              <select id="room_id" name="room_id" required>
+                <option value="">Select Room</option>
+                <% rooms.forEach(room => { %>
+                  <option value="<%= room.id %>">
+                    Room <%= room.room_number %> (ID: <%= room.id %>)
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="issue_type">Issue Type *</label>
+              <input type="text" id="issue_type" name="issue_type" required />
+            </div>
+            <div class="form-group">
+              <label for="reported_date">Reported Date *</label>
+              <input
+                type="date"
+                id="reported_date"
+                name="reported_date"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="resolved_date">Resolved Date</label>
+              <input type="date" id="resolved_date" name="resolved_date" />
+            </div>
+          </div>
+
+          <!-- Right Side -->
+          <div class="right-side">
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select id="status" name="status">
+                <option value="reported" selected>Reported</option>
+                <option value="in_progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="priority">Priority</label>
+              <select id="priority" name="priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="cost">Estimated Cost</label>
+              <input type="number" id="cost" name="cost" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label for="assigned_to">Assigned To</label>
+              <input type="text" id="assigned_to" name="assigned_to" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="remarks">Remarks</label>
+          <textarea id="remarks" name="remarks" rows="3"></textarea>
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="cancel-maintenance-btn">Cancel</button>
+          <button type="submit" class="submit-maintenance-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="/js/maintenance.js"></script>
+  </body>
+</html>

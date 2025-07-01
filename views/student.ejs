@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student</title>
+    <link rel="stylesheet" href="/css/student.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <main>
+      <!-- sidebar -->
+      <div class="sidebar">
+        <div class="nav">
+          <div class="cross-icon">
+            <i class="fas fa-xmark"></i>
+          </div>
+          <div class="logo">
+            <img src="/assets/logo.png" alt="" />
+            <p>CodeFlare</p>
+          </div>
+        </div>
+        <div class="links">
+          <ul>
+            <li>
+              <a class="Dashboard" href="/">
+                <i
+                  class="fa-duotone fa-solid fa-table-columns"
+                  style="--fa-secondary-color: #ffffff"
+                ></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a class="Student active" href="/student">
+                <i class="fas fa-user-graduate"></i>
+                <span>Student</span>
+              </a>
+            </li>
+            <li>
+              <a class="Room" href="/room">
+                <i class="fa-solid fa-bed"></i>
+                <span>Room</span>
+              </a>
+            </li>
+            <li>
+              <a class="Payment" href="/payment">
+                <i class="fas fa-money-bill"></i>
+                <span>Payment</span>
+              </a>
+            </li>
+            <li>
+              <a class="Guardians" href="/guardian">
+                <i class="fas fa-users"></i>
+                <span>Guardians</span>
+              </a>
+            </li>
+            <li>
+              <a class="Visitors" href="/visitor">
+                <i class="fas fa-user-check"></i>
+                <span>Visitors</span>
+              </a>
+            </li>
+            <li>
+              <a class="Maintenance" href="/maintenance">
+                <i class="fa-solid fa-wrench"></i>
+                <span>Maintenance</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- sidebar end -->
+
+      <!-- main content -->
+      <div class="main-content">
+        <!-- TOP-nav -->
+        <nav class="main-nav">
+          <div class="page-name">
+            <i class="fas fa-bars"></i>
+            <p>Student</p>
+          </div>
+          <div class="button">
+            <button class="add-student">Add Student</button>
+          </div>
+        </nav>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Roll NO</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Year</th>
+                <th>Room</th>
+                <th>Bed</th>
+                <th>Guardian</th>
+                <th>Phone</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach(student => { %>
+              <tr>
+                <td><%= student.roll_number %></td>
+                <td><%= student.name %></td>
+                <td><%= student.course %></td>
+                <td><%= student.year %></td>
+                <td><%= student.room_number || 'N/A' %></td>
+                <td><%= student.bed_number || 'N/A' %></td>
+                <td><%= student.guardian_name || 'N/A' %></td>
+                <td><%= student.phone %></td>
+                <td>
+                  <form
+                    action="/student/<%= student.roll_number %>?_method=DELETE"
+                    method="POST"
+                  >
+                    <button type="submit" class="delete-form">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <div class="add-new-student">
+      <h2 class="form-title">Add New Student</h2>
+      <form
+        class="student-form"
+        action="/student"
+        id="student-form"
+        method="POST"
+      >
+        <div class="inputForm">
+          <!-- Student Info (Left) -->
+          <fieldset class="form-section student-info">
+            <legend>Student Info</legend>
+            <div class="form-group">
+              <label for="name">Name *</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" />
+            </div>
+            <div class="form-group">
+              <label for="Course">Course</label>
+              <input type="text" id="Course" name="Course" />
+            </div>
+            <div class="form-group">
+              <label for="Address">Address</label>
+              <textarea id="Address" name="Address" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="RollNo">Roll Number *</label>
+              <input type="text" id="RollNo" name="RollNo" required />
+            </div>
+            <div class="form-group">
+              <label for="Phone">Phone</label>
+              <input type="text" id="Phone" name="Phone" />
+            </div>
+            <div class="form-group">
+              <label for="year">Year</label>
+              <select id="year" name="year" required>
+                <option value="" disabled selected>Select Year</option>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3">3rd Year</option>
+                <option value="4">4th Year</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <!-- Room Info (Center) -->
+          <!-- Room Info (Center) -->
+          <fieldset class="form-section room-info">
+            <legend>Room Info</legend>
+
+            <div class="form-group">
+              <label for="Room">Room</label>
+              <select name="Room" id="Room" required>
+                <option value="" disabled selected>Select Room</option>
+                <% rooms.forEach(room => { %>
+                <option value="<%= room.id %>">
+                  Room <%= room.room_number %> (Floor <%= room.floor %>)
+                </option>
+                <% }); %>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="Bed">Bed</label>
+              <select id="Bed" name="Bed" required>
+                <option value="">Select Bed</option>
+                <option value="1">Bed 1</option>
+                <option value="2">Bed 2</option>
+                <option value="3">Bed 3</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <!-- Guardian Info (Right) -->
+          <fieldset class="form-section guardian-info">
+            <legend>Guardian Info</legend>
+
+            <div class="form-group">
+              <label for="GuardianName">Guardian Name</label>
+              <input type="text" id="GuardianName" name="GuardianName" />
+            </div>
+
+            <div class="form-group">
+              <label for="GuardianRelationship">Relationship</label>
+              <input
+                type="text"
+                id="GuardianRelationship"
+                name="GuardianRelationship"
+                placeholder="e.g. Father, Mother"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="GuardianEmail">Email</label>
+              <input type="email" id="GuardianEmail" name="GuardianEmail" />
+            </div>
+
+            <div class="form-group">
+              <label for="GuardianPhone">Phone</label>
+              <input type="text" id="GuardianPhone" name="GuardianPhone" />
+            </div>
+
+            <div class="form-group">
+              <label for="GuardianAddress">Address</label>
+              <textarea id="GuardianAddress" name="GuardianAddress" rows="3">
+              </textarea>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="button-group">
+          <button type="button" class="cancel-btn">Cancel</button>
+          <button type="submit" class="submit-btn">Save</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="/js/student.js"></script>
+  </body>
+</html>

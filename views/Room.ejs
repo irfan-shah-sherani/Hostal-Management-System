@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Room</title>
+    <link rel="stylesheet" href="/css/room.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <main>
+      <!-- sidebar -->
+      <div class="sidebar">
+        <div class="nav">
+          <div class="cross-icon">
+            <i class="fas fa-xmark"></i>
+          </div>
+          <div class="logo">
+            <img src="/assets/logo.png" alt="" />
+            <p>CodeFlare</p>
+          </div>
+        </div>
+        <div class="links">
+          <ul>
+            <li>
+              <a class="Dashboard" href="/">
+                <i
+                  class="fa-duotone fa-solid fa-table-columns"
+                  style="--fa-secondary-color: #ffffff"
+                ></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a class="Student" href="/students">
+                <i class="fas fa-user-graduate"></i>
+                <span>Student</span>
+              </a>
+            </li>
+            <li>
+              <a class="Room active" href="/room">
+                <i class="fa-solid fa-bed"></i>
+                <span>Room</span>
+              </a>
+            </li>
+            <li>
+              <a class="Payment" href="/payment">
+                <i class="fas fa-money-bill"></i>
+                <span>Payment</span>
+              </a>
+            </li>
+            <li>
+              <a class="Guardians" href="/guardian">
+                <i class="fas fa-users"></i>
+                <span>Guardians</span>
+              </a>
+            </li>
+            <li>
+              <a class="Visitors" href="/visitor">
+                <i class="fas fa-user-check"></i>
+                <span>Visitors</span>
+              </a>
+            </li>
+            <li>
+              <a class="Maintenance" href="/maintenance">
+                <i class="fa-solid fa-wrench"></i>
+                <span>Maintenance</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- sidebar end -->
+
+      <!-- main content -->
+      <div class="main-content">
+        <!-- TOP-nav -->
+        <nav class="main-nav">
+          <div class="page-name">
+            <i class="fas fa-bars"></i>
+            <p>Room</p>
+          </div>
+          <div class="button">
+            <button id="addRoomBtn">Add Room</button>
+          </div>
+        </nav>
+
+        <!-- main content  end -->
+        <div class="table-container">
+          <table>
+            <tr>
+              <th>ID</th>
+              <th>Room Number</th>
+              <th>Capacity</th>
+              <th>Floor</th>
+              <th>Room Type</th>
+              <th>Rent Amount</th>
+              <th>Actions</th>
+            </tr>
+            <tbody>
+              <% rooms.forEach((room) => { %>
+              <tr>
+                <td><%= room.id %></td>
+                <td><%= room.room_number %></td>
+                <td><%= room.capacity %></td>
+                <td><%= room.floor %></td>
+                <td><%= room.room_type %></td>
+                <td><%= room.rent_amount %></td>
+                <td>
+                  <form
+                    action="/room/<%= room.id %>?_method=DELETE"
+                    method="POST"
+                  >
+                    <button type="submit" class="delete-form">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Trigger Button OUTSIDE -->
+        <!-- Add Room Form (initially hidden in CSS or JS) -->
+        <div class="add-new-room" style="display: none">
+          <h2 class="form-title">Add New Room</h2>
+          <form class="room-form" action="/room" method="POST">
+            <div class="inputForm">
+              <!-- Left Side -->
+              <div class="left-side">
+                <div class="form-group">
+                  <label for="room_number">Room Number *</label>
+                  <input
+                    type="text"
+                    id="room_number"
+                    name="room_number"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="capacity">Capacity *</label>
+                  <input type="number" id="capacity" name="capacity" required />
+                </div>
+                <div class="form-group">
+                  <label for="floor">Floor *</label>
+                  <input type="number" id="floor" name="floor" required />
+                </div>
+              </div>
+
+              <!-- Right Side -->
+              <div class="right-side">
+                <div class="form-group">
+                  <label for="room_type">Room Type *</label>
+                  <select id="room_type" name="room_type" required>
+                    <option disabled selected>Select Type</option>
+                    <option value="single">Single</option>
+                    <option value="double">Double</option>
+                    <option value="triple">Triple</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="rent_amount">Rent Amount *</label>
+                  <input
+                    type="number"
+                    id="rent_amount"
+                    name="rent_amount"
+                    step="0.01"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="status">Status</label>
+                  <select id="status" name="status">
+                    <option value="available" selected>Available</option>
+                    <option value="occupied">Occupied</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="button-group">
+              <button type="button" class="cancel-room-btn">Cancel</button>
+              <button type="submit" class="submit-room-btn">Add Room</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <script src="/js/room.js"></script>
+  </body>
+</html>

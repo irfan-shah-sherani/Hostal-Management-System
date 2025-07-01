@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment</title>
+    <link rel="stylesheet" href="/css/payment.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <main>
+      <!-- sidebar -->
+      <div class="sidebar">
+        <div class="nav">
+          <div class="cross-icon">
+            <i class="fas fa-xmark"></i>
+          </div>
+          <div class="logo">
+            <img src="/assets/logo.png" alt="" />
+            <p>CodeFlare</p>
+          </div>
+        </div>
+        <div class="links">
+          <ul>
+            <li>
+              <a class="Dashboard" href="/">
+                <i
+                  class="fa-duotone fa-solid fa-table-columns"
+                  style="--fa-secondary-color: #ffffff"
+                ></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a class="Student" href="/student">
+                <i class="fas fa-user-graduate"></i>
+                <span>Student</span>
+              </a>
+            </li>
+            <li>
+              <a class="Room" href="/room">
+                <i class="fa-solid fa-bed"></i>
+                <span>Room</span>
+              </a>
+            </li>
+            <li>
+              <a class="Payment active" href="/payment">
+                <i class="fas fa-money-bill"></i>
+                <span>Payment</span>
+              </a>
+            </li>
+            <li>
+              <a class="Guardians" href="/guardian">
+                <i class="fas fa-users"></i>
+                <span>Guardians</span>
+              </a>
+            </li>
+            <li>
+              <a class="Visitors" href="/visitor">
+                <i class="fas fa-user-check"></i>
+                <span>Visitors</span>
+              </a>
+            </li>
+            <li>
+              <a class="Maintenance" href="/maintenance">
+                <i class="fa-solid fa-wrench"></i>
+                <span>Maintenance</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- sidebar end -->
+
+      <!-- main content -->
+      <div class="main-content">
+        <!-- TOP-nav -->
+        <nav class="main-nav">
+          <div class="page-name">
+            <i class="fas fa-bars"></i>
+            <p>Payment</p>
+          </div>
+          <div class="button">
+            <button id="addPaymentBtn">Add Payment</button>
+          </div>
+        </nav>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Student ID</th>
+                <th>Amount</th>
+                <th>Payment Date</th>
+                <th>Payment type</th>
+                <th>payment method</th>
+                <th>status</th>
+                <th>Actions</th>    
+              </tr>
+            </thead>
+            <tbody>
+              <% payments.forEach(payment => { %>
+              <tr>
+                <td><%= payment.id %></td>
+                <td><%= payment.student_id %></td>
+                <td><%= payment.amount %></td>
+                <td><%= payment.payment_date %></td>
+                <td><%= payment.payment_type %></td>
+                <td><%= payment.payment_method %></td>
+                <td><%= payment.status %></td>
+                <td>
+                  <form
+                    action="/payment/<%= payment.id %>?_method=DELETE"
+                    method="POST">
+                    <button type="submit" class="delete-form">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <div class="add-new-payment" style="display: none">
+      <h2 class="form-title">Add New Payment</h2>
+      <form class="payment-form" action="/payment" method="POST">
+        <div class="inputForm">
+          <!-- Left Side -->
+          <div class="left-side">
+            <div class="form-group">
+              <label for="student_id">Student *</label>
+              <select id="student_id" name="student_id" required>
+                <option value="">Select Student</option>
+                <% students.forEach(student => { %>
+                  <option value="<%= student.id %>">
+                    <%= student.name %> (Roll: <%= student.roll_number %>)
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="amount">Amount *</label>
+              <input type="number" id="amount" name="amount" step="0.01" required />
+            </div>
+            <div class="form-group">
+              <label for="payment_date">Payment Date *</label>
+              <input type="date" id="payment_date" name="payment_date" required />
+            </div>
+            <div class="form-group">
+              <label for="payment_type">Payment Type *</label>
+              <select id="payment_type" name="payment_type" required>
+                <option disabled selected>Select Payment Type</option>
+                <option value="monthly_rent">Monthly Rent</option>
+                <option value="security_deposit">Security Deposit</option>
+                <option value="mess_fee">Mess Fee</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+    
+          <!-- Right Side -->
+          <div class="right-side">
+            <div class="form-group">
+              <label for="payment_method">Payment Method</label>
+              <select id="payment_method" name="payment_method">
+                <option value="Cash">Cash</option>
+                <option value="Bank Transfer">Bank Transfer</option>
+                <option value="Online">Online</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select id="status" name="status">
+                <option value="Paid" selected>Paid</option>
+                <option value="Pending">Pending</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="receipt_number">Receipt Number</label>
+              <input type="text" id="receipt_number" name="receipt_number" />
+            </div>
+            <div class="form-group">
+              <label for="remarks">Remarks</label>
+              <textarea id="remarks" name="remarks" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+    
+        <div class="button-group">
+          <button type="button" class="cancel-payment-btn">Cancel</button>
+          <button type="submit" class="submit-payment-btn">Add Payment</button>
+        </div>
+      </form>
+    </div>
+    
+    
+    <script src="/js/payment.js"></script>
+  </body>
+</html>

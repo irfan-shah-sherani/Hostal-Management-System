@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guardian</title>
+    <link rel="stylesheet" href="/css/student.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <main>
+      <!-- sidebar -->
+      <div class="sidebar">
+        <div class="nav">
+          <div class="cross-icon">
+            <i class="fas fa-xmark"></i>
+          </div>
+          <div class="logo">
+            <img src="/assets/logo.png" alt="" />
+            <p>CodeFlare</p>
+          </div>
+        </div>
+        <div class="links">
+          <ul>
+            <li>
+              <a class="Dashboard" href="/">
+                <i
+                  class="fa-duotone fa-solid fa-table-columns"
+                  style="--fa-secondary-color: #ffffff"
+                ></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a class="Student" href="/student">
+                <i class="fas fa-user-graduate"></i>
+                <span>Student</span>
+              </a>
+            </li>
+            <li>
+              <a class="Room" href="/room">
+                <i class="fa-solid fa-bed"></i>
+                <span>Room</span>
+              </a>
+            </li>
+            <li>
+              <a class="Payment" href="/payment">
+                <i class="fas fa-money-bill"></i>
+                <span>Payment</span>
+              </a>
+            </li>
+            <li>
+              <a class="Guardians active" href="/guardian">
+                <i class="fas fa-users"></i>
+                <span>Guardians</span>
+              </a>
+            </li>
+            <li>
+              <a class="Visitors" href="/visitor">
+                <i class="fas fa-user-check"></i>
+                <span>Visitors</span>
+              </a>
+            </li>
+            <li>
+              <a class="Maintenance" href="/maintenance">
+                <i class="fa-solid fa-wrench"></i>
+                <span>Maintenance</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- sidebar end -->
+
+      <!-- main content -->
+      <div class="main-content">
+        <!-- TOP-nav -->
+        <nav class="main-nav">
+          <div class="page-name">
+            <i class="fas fa-bars"></i>
+            <p>Guardian</p>
+          </div>
+        </nav>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Relation</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Actions</th>    
+              </tr>
+            </thead>
+            <tbody>
+              <% guardians.forEach(guardian => { %>
+              <tr>
+                <td><%= guardian.id %></td>
+                <td><%= guardian.student_id %></td>
+                <td><%= guardian.name %></td>
+                <td><%= guardian.relation %></td>
+                <td><%= guardian.phone %></td>
+                <td><%= guardian.email %></td>
+                <td><%= guardian.address %></td>
+                <td>
+                  <form
+                    action="/guardian/<%= guardian.id %>?_method=DELETE"
+                    method="POST">
+                    <button type="submit" class="delete-form">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <script src="/js/guardian.js"></script>
+  </body>
+</html>

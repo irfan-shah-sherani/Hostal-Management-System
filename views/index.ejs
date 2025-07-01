@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeFlare</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-..."
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+</head>
+<body>
+     <main>
+        <!-- sidebar -->
+        <div class="sidebar">
+            <div class="nav"> 
+                <div class="cross-icon">
+                    <i class="fas fa-xmark"></i>
+                </div>
+                <div class="logo"> 
+                    <img src="/assets/logo.png" alt="">
+                    <p> CodeFlare</p>
+                </div>
+            </div>
+            <div class="links">
+                <ul>
+                    <li>
+                        <a class="Dashboard active" href="#dashboard" >
+                            <i class="fa-duotone fa-solid fa-table-columns" style="--fa-secondary-color: #ffffff;"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li> 
+                        <a class="Student" href="/student">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>Student</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="Room" href="/room">
+                            <i class="fa-solid fa-bed"></i>
+                            <span>Room</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="Payment" href="/payment">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Payment</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="Guardians" href="/guardian">
+                            <i class="fas fa-users"></i>
+                            <span>Guardians</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="Visitors" href="/visitor">
+                            <i class="fas fa-user-check"></i>
+                            <span>Visitors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="Maintenance" href="/maintenance">
+                            <i class="fa-solid fa-wrench"></i>
+                            <span>Maintenance</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- sidebar end -->
+    
+        <!-- main content -->
+        <div class="main-content">
+            <!-- TOP-nav -->
+            <nav class="main-nav">
+                <div class="page-name">
+                    <i class="fas fa-bars"></i>
+                    <p>Dashboard</p>
+                </div>
+                <div class="date">
+                    <p><%= cdate.toDateString() %></p>
+                </div>
+            </nav>
+            <!-- TOP-nav end -->
+            <div class="content">
+                <div class="main-cards">
+                    <div class="Total-Student card">
+                        <i class="fas fa-user-graduate"></i>
+                        <p>Total Student</p>
+                        <p><%= totalStudents %></p>
+                    </div>
+                    <div class="Total-Room card">
+                        <i class="fas fa-bed"></i>
+                        <p>Total Room</p>
+                        <p><%= totalRooms %></p>
+                    </div>
+                    <div class="Panding-Payment card">
+                        <i class="fas fa-money-bill"></i>
+                        <p>Panding Payment</p>
+                        <p><%= pendingPayments %></p>
+                    </div>
+                    <div class="Maintenance-issue card">
+                        <i class="fa-solid fa-wrench"></i>
+                        <p>Maintenance Issue</p>
+                        <p><%= maintenanceIssues %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="main-list">
+                <div class="Recent-Payment list">
+                    <p class="list-title">Recent Payment</p>
+                    <ul>
+                      <% recentPayments.forEach(payment => { %>
+                        <li>
+                          <div class="left">
+                            <p><%= payment.student_name %></p>
+                            <p><%= payment.payment_type %> - <%= payment.payment_date.toDateString() %></p>
+                          </div>
+                          <p>$<%= payment.amount %></p>
+                        </li>
+                      <% }) %>
+                    </ul>
+                  </div>
+                  
+                  <div class="Recent-Visitors list">
+                    <p class="list-title">Recent Visitors</p>
+                    <ul>
+                      <% recentVisitors.forEach(visitor => { %>
+                        <li>
+                          <div class="left">
+                            <p><%= visitor.visitor_name %></p>
+                            <p>Visiting: <%= visitor.student_name %> (Room <%= visitor.room_number %>)</p>
+                          </div>
+                          <p><%= visitor.visit_date.toDateString() %>, <%= visitor.check_in_time %></p>
+                        </li>
+                      <% }) %>
+                    </ul>
+                  </div>
+            </div>
+        </div>
+     </main>
+     <script src="/public/js/index.js"></script>
+</body>
+</html>

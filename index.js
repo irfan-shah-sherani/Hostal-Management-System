@@ -151,7 +151,7 @@ app.get("/room", (req, res) => {
   const roomQuery = "SELECT * FROM room";
   db.query(roomQuery, (err, roomResult) => {
     if (err) throw err;
-    res.render("room.ejs", { rooms: roomResult });
+    res.render("Room.ejs", { rooms: roomResult });
   });
 });
 
@@ -267,7 +267,7 @@ app.delete("/room/:id", (req, res) => {
       console.error("Failed to delete room:", err);
       return res.status(500).send("Server error");
     }
-    res.redirect("/room"); // or wherever your room list is rendered
+    res.redirect("/Room"); // or wherever your room list is rendered
   });
 });
 
@@ -478,7 +478,7 @@ app.post("/room", (req, res) => {
     }
 
     console.log("✅ Room added:", result.insertId);
-    res.redirect("/room"); // Redirect back to room list
+    res.redirect("/Room"); // Redirect back to room list
   });
 });
 

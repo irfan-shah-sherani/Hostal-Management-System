@@ -8,7 +8,7 @@ require("dotenv").config();
 // const app = express();
 const app = express();
 app.use(methodOverride("_method"));
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 
 app.set("view engine", "ejs");
@@ -32,6 +32,10 @@ db.connect((err) => {
   } else {
     console.log("✅ Connected to Railway MySQL!");
   }
+});
+
+app.get("/healthz", (req, res) => {
+  res.send(" health is OK");
 });
 
 app.get("/", (req, res) => {  

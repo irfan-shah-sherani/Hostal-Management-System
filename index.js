@@ -2,6 +2,10 @@ const express = require("express");
 const path = require("path");
 const mysql = require("mysql2");
 const methodOverride = require("method-override");
+require("dotenv").config();
+
+// Initialize Express app
+// const app = express();
 const app = express();
 app.use(methodOverride("_method"));
 const port = 3000;
@@ -18,7 +22,7 @@ const db = mysql.createConnection({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
-  password: process.env.DB_PASS,
+  password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME
 });
 
